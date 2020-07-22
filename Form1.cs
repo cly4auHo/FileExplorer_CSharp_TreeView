@@ -33,12 +33,13 @@ namespace Explorer
 
         private void ButtonOpen_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Select path" };
-
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {           
-                PathField.Text = fbd.SelectedPath;
-                BuildTree(fbd.SelectedPath);
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Select path" })
+            {
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    PathField.Text = fbd.SelectedPath;
+                    BuildTree(fbd.SelectedPath);
+                }
             }
         }
 
@@ -119,7 +120,7 @@ namespace Explorer
                             else
                             {
                                 if (treeView.SelectedNode.Parent == null)
-                                    PathField.Text = newPath; 
+                                    PathField.Text = newPath;
 
                                 treeView.SelectedNode.Text = NewNameField.Text.Trim();
                                 Directory.Move(oldPath, newPath);
